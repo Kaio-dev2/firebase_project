@@ -1,0 +1,664 @@
+
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user's profile information within the application, excluding authentication credentials managed by an external system like Firebase. This entity stores details pertinent to the user's interaction with the store, such as their name and email for app-specific purposes.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address, which is typically used as their login identifier in the external authentication system. This field should be unique.",
+          "format": "email"
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the user, provided during registration."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user profile was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the user profile was updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "name",
+        "createdAt"
+      ]
+    },
+    "ProjectFile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ProjectFile",
+      "type": "object",
+      "description": "Represents a file uploaded by a user or admin related to a specific project.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the file metadata document."
+        },
+        "name": {
+          "type": "string",
+          "description": "Original name of the file."
+        },
+        "url": {
+          "type": "string",
+          "description": "Download URL from Firebase Storage.",
+          "format": "uri"
+        },
+        "type": {
+          "type": "string",
+          "description": "MIME type of the file."
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the file in bytes."
+        },
+        "uploadedBy": {
+          "type": "string",
+          "description": "UID of the user who uploaded the file."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the file (e.g., 'logo', 'text', 'contract', 'backup').",
+          "enum": ["logo", "text", "image", "contract", "backup", "other"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of upload.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "url",
+        "type",
+        "size",
+        "uploadedBy",
+        "createdAt"
+      ]
+    },
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a single product available in the dropshipping store, including details for display, pricing, and categorisation. This entity supports dynamic showcases, recommendations, and sales features.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Product entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the product."
+        },
+        "price": {
+          "type": "number",
+          "description": "The standard selling price of the product."
+        },
+        "discountPrice": {
+          "type": "number",
+          "description": "The discounted price of the product, if any."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL to the main image of the product.",
+          "format": "uri"
+        },
+        "categoryIds": {
+          "type": "array",
+          "description": "References to Categories this product belongs to. (Relationship: Category N:N Product)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isFeatured": {
+          "type": "boolean",
+          "description": "Flag indicating if the product should be displayed in featured sections or carousels."
+        },
+        "isBestSeller": {
+          "type": "boolean",
+          "description": "Flag indicating if the product is a 'Mais Vendido' (Best Seller)."
+        },
+        "averageRating": {
+          "type": "number",
+          "description": "The calculated average rating based on customer reviews."
+        },
+        "stockQuantity": {
+          "type": "number",
+          "description": "The current quantity of the product available in stock."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the product was added to the store.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time the product details were updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price",
+        "imageUrl",
+        "categoryIds",
+        "isFeatured",
+        "isBestSeller",
+        "averageRating",
+        "stockQuantity",
+        "createdAt"
+      ]
+    },
+    "Category": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Category",
+      "type": "object",
+      "description": "Defines a product category for organizing and filtering products. This supports the interactive category grid and product categorization.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Category entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the category (e.g., 'Tecnologia', 'Beleza')."
+        },
+        "iconUrl": {
+          "type": "string",
+          "description": "URL to an icon or image representing the category.",
+          "format": "uri"
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the category."
+        },
+        "slug": {
+          "type": "string",
+          "description": "A URL-friendly identifier for the category, often derived from its name."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "iconUrl",
+        "slug"
+      ]
+    },
+    "Testimonial": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Testimonial",
+      "type": "object",
+      "description": "Stores customer testimonials used for social proof, including customer details and their feedback. This populates the animated social proof slider.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Testimonial entity."
+        },
+        "authorName": {
+          "type": "string",
+          "description": "The name of the customer who provided the testimonial."
+        },
+        "authorCountry": {
+          "type": "string",
+          "description": "The country of residence of the customer."
+        },
+        "authorImageUrl": {
+          "type": "string",
+          "description": "URL to a photo of the customer, for display in testimonials.",
+          "format": "uri"
+        },
+        "text": {
+          "type": "string",
+          "description": "The content of the testimonial."
+        },
+        "rating": {
+          "type": "number",
+          "description": "An optional rating given by the customer (e.g., 1-5 stars)."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the testimonial was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "authorName",
+        "authorCountry",
+        "authorImageUrl",
+        "text",
+        "createdAt"
+      ]
+    },
+    "Order": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order",
+      "type": "object",
+      "description": "Records a customer's purchase, detailing the transaction, shipping information, and overall status. Essential for tracking sales and managing fulfillment.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Order entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who placed the order. (Relationship: UserProfile 1:N Order)"
+        },
+        "orderDate": {
+          "type": "string",
+          "description": "The date and time when the order was placed.",
+          "format": "date-time"
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "The total monetary amount of the order, including shipping and taxes."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current fulfillment status of the order (e.g., 'pending', 'processing', 'shipped', 'delivered', 'cancelled')."
+        },
+        "shippingAddress": {
+          "type": "string",
+          "description": "The full shipping address for the order. This could be normalized into a separate Address entity if more complex address management is needed."
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "The payment method used for the order (e.g., 'Stripe', 'PayPal')."
+        },
+        "transactionId": {
+          "type": "string",
+          "description": "The unique transaction identifier provided by the payment gateway."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "orderDate",
+        "totalAmount",
+        "status",
+        "shippingAddress",
+        "paymentMethod",
+        "transactionId"
+      ]
+    },
+    "OrderItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "OrderItem",
+      "type": "object",
+      "description": "Details a specific product included within an order, capturing the quantity and price at the time of purchase. This entity forms the 'line items' of an order.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the OrderItem entity."
+        },
+        "orderId": {
+          "type": "string",
+          "description": "Reference to the parent Order this item belongs to. (Relationship: Order 1:N OrderItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product purchased. (Relationship: Product 1:N OrderItem - logistically, a product is associated with many order items)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The number of units of the product purchased."
+        },
+        "priceAtPurchase": {
+          "type": "number",
+          "description": "The price of the product at the moment of purchase, crucial for historical accuracy."
+        }
+      },
+      "required": [
+        "id",
+        "orderId",
+        "productId",
+        "quantity",
+        "priceAtPurchase"
+      ]
+    },
+    "Cart": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Cart",
+      "type": "object",
+      "description": "Represents a user's shopping cart, holding items they intend to purchase before checkout. This enables the dynamic cart counter.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Cart entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who owns this cart. (Relationship: UserProfile 1:N Cart)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the cart was initially created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last time an item was added to or removed from the cart.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CartItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CartItem",
+      "type": "object",
+      "description": "Details a specific product and its quantity within a user's shopping cart.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CartItem entity."
+        },
+        "cartId": {
+          "type": "string",
+          "description": "Reference to the parent Cart this item belongs to. (Relationship: Cart 1:N CartItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product added to the cart. (Relationship: Product 1:N CartItem - logistically, a product can be in many cart items)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "The number of units of the product in the cart."
+        },
+        "addedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the item was added to the cart.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "cartId",
+        "productId",
+        "quantity",
+        "addedAt"
+      ]
+    },
+    "NewsletterSubscription": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "NewsletterSubscription",
+      "type": "object",
+      "description": "Stores email addresses of users who have subscribed to the newsletter, supporting lead generation and marketing efforts.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the NewsletterSubscription entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the subscriber. This should be unique.",
+          "format": "email"
+        },
+        "subscribedAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the email was subscribed.",
+          "format": "date-time"
+        },
+        "isConfirmed": {
+          "type": "boolean",
+          "description": "Flag indicating if the subscription has been confirmed (e.g., via double opt-in)."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "subscribedAt",
+        "isConfirmed"
+      ]
+    },
+    "Review": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Review",
+      "type": "object",
+      "description": "Captures customer reviews and ratings for products, contributing to the 'estrelas de avaliação' and social proof.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Review entity."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the Product being reviewed. (Relationship: Product 1:N Review)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who submitted the review. (Relationship: UserProfile 1:N Review). Can be null if anonymous reviews are allowed."
+        },
+        "rating": {
+          "type": "number",
+          "description": "The star rating given by the user (e.g., an integer from 1 to 5)."
+        },
+        "comment": {
+          "type": "string",
+          "description": "The textual comment provided by the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the review was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "productId",
+        "rating",
+        "comment",
+        "createdAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous",
+      "google.com",
+      "phone"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/user_profiles/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores user-specific profile information.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/files/{fileId}",
+        "definition": {
+          "entityName": "ProjectFile",
+          "schema": {
+            "$ref": "#/backend/entities/ProjectFile"
+          },
+          "description": "Stores metadata for files uploaded by the user or admin.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Owner of the files."
+            },
+            {
+              "name": "fileId",
+              "description": "Unique identifier for the file."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores details for each product available in the store.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "The unique identifier for the product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/categories/{categoryId}",
+        "definition": {
+          "entityName": "Category",
+          "schema": {
+            "$ref": "#/backend/entities/Category"
+          },
+          "description": "Defines product categories.",
+          "params": [
+            {
+              "name": "categoryId",
+              "description": "The unique identifier for the category."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/testimonials/{testimonialId}",
+        "definition": {
+          "entityName": "Testimonial",
+          "schema": {
+            "$ref": "#/backend/entities/Testimonial"
+          },
+          "description": "Stores customer testimonials for social proof.",
+          "params": [
+            {
+              "name": "testimonialId",
+              "description": "The unique identifier for the testimonial."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Records individual customer orders.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who placed the order."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier for the order."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/cart",
+        "definition": {
+          "entityName": "Cart",
+          "schema": {
+            "$ref": "#/backend/entities/Cart"
+          },
+          "description": "Represents a user's single shopping cart.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who owns the cart."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/newsletter_subscriptions/{subscriptionId}",
+        "definition": {
+          "entityName": "NewsletterSubscription",
+          "schema": {
+            "$ref": "#/backend/entities/NewsletterSubscription"
+          },
+          "description": "Stores email addresses of newsletter subscribers.",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "description": "The unique identifier for the newsletter subscription."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/products/{productId}/reviews/{reviewId}",
+        "definition": {
+          "entityName": "Review",
+          "schema": {
+            "$ref": "#/backend/entities/Review"
+          },
+          "description": "Captures customer reviews for specific products.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "The unique identifier of the product being reviewed."
+            },
+            {
+              "name": "reviewId",
+              "description": "The unique identifier for the review."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{uid}",
+        "definition": {
+          "entityName": "AdminRole",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Designates administrative users.",
+          "params": [
+            {
+              "name": "uid",
+              "description": "Firebase Auth UID of the admin."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

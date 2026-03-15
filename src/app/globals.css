@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 39% 5%; /* #0a0a0f */
+    --foreground: 210 20% 98%; /* #f8fafc */
+
+    --card: 216 48% 11%; /* #0f172a */
+    --card-foreground: 210 20% 98%;
+
+    --popover: 222 39% 5%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 20% 98%;
+    --primary-foreground: 222 39% 5%;
+
+    --secondary: 216 48% 11%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 216 48% 18%;
+    --muted-foreground: 216 34% 65%;
+
+    --accent: 221 83% 47%; /* #2563eb */
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 216 48% 18%;
+    --input: 216 48% 18%;
+    --ring: 221 83% 57%; /* A slightly lighter blue for rings */
+
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222 39% 5%; /* #0a0a0f */
+    --foreground: 210 20% 98%; /* #f8fafc */
+
+    --card: 216 48% 11%; /* #0f172a */
+    --card-foreground: 210 20% 98%;
+
+    --popover: 222 39% 5%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 20% 98%;
+    --primary-foreground: 222 39% 5%;
+
+    --secondary: 216 48% 11%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 216 48% 18%;
+    --muted-foreground: 216 34% 65%;
+
+    --accent: 221 83% 47%; /* #2563eb */
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 216 48% 18%;
+    --input: 216 48% 18%;
+    --ring: 221 83% 57%;
+
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
